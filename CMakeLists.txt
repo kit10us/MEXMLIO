@@ -9,7 +9,10 @@ else()
 endif()
 message("")
 
-project(xmlio CXX)
+include(cmakeutil/Functions.txt)
+
+
+project(MEXMLIO CXX)
 
 #set(CMAKE_CONFIGURATION_TYPES 
 #	"Debug;Release"
@@ -20,7 +23,7 @@ project(xmlio CXX)
 # TODO: Add resource manager lib.
 
 function(GenerateMain)
-	set(TARGET_NAME xmlio)
+	set(TARGET_NAME MEXMLIO)
 	string(TOUPPER ${TARGET_NAME} UPPER_TARGET_NAME)
 	set(TARGET_EXT dll)
 	set(NAMESPACE xmlio)
@@ -65,20 +68,25 @@ function(GenerateMain)
 	add_library(${TARGET_NAME} MODULE ${MAIN_SOURCES})
 	
 	if(MSVC)
-		set(UNIFY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../unify)
-		if(EXISTS "${UNIFY_DIR}/build/unify.vcxproj")
-			message("Including unify project")
-			include_external_msproject("unify" ${UNIFY_DIR}/build/unify.vcxproj)
-			add_dependencies(${TARGET_NAME} "unify")
-		else()
-			message("Cannot find unify project, skipping (${UNIFY_DIR}/build/unify.vcxproj)")
-		endif()					
+		AddTargetLibrary(${TARGET_NAME} unify ${CMAKE_CURRENT_SOURCE_DIR}/../unify)
+		
+		AddTargetLibraryOld(${TARGET_NAME} ResourceManager ${CMAKE_CURRENT_SOURCE_DIR}/../resourcemanager)
+		AddTargetLibraryOld(${TARGET_NAME} qxml ${CMAKE_CURRENT_SOURCE_DIR}/../qxml)
+		
+		#set(RESOURCEMANAGER_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../resourcemanager)
+		#set(RESOURCEMANAGER_VCXPROJ_FILE ${RESOURCEMANAGER_DIR}/ResourceManager.vcxproj)
+		#if(EXISTS ${RESOURCEMANAGER_VCXPROJ_FILE})
+		#	message("Including Resource Manager project")
+		#	include_external_msproject("ResourceManager" ${RESOURCEMANAGER_VCXPROJ_FILE})
+		#	add_dependencies(${TARGET_NAME} "ResourceManager")
+		#else()
+		#	message("Cannot find unify project, skipping (${UNIFY_DIR}/build/unify.vcxproj)")
+		#endif()		
+		#target_include_directories(${TARGET_NAME} PUBLIC ../resourcemanager)
 	endif()
 
-	target_include_directories(${TARGET_NAME} PUBLIC ../unify)
-	target_include_directories(${TARGET_NAME} PUBLIC ../resourcemanager)
 	target_include_directories(${TARGET_NAME} PUBLIC ../interop)
-	target_include_directories(${TARGET_NAME} PUBLIC ../qxml)
+	#target_include_directories(${TARGET_NAME} PUBLIC ../qxml)
 	
 	target_include_directories(${TARGET_NAME} PUBLIC ../MercuryEngine)
 	target_include_directories(${TARGET_NAME} PUBLIC ../kitlogger)
@@ -125,8 +133,8 @@ function(GenerateMain)
 	
 	# Add link libraries
 	target_link_libraries(${TARGET_NAME} unify.lib)	
-	target_link_libraries(${TARGET_NAME} ResourceManager.lib)
-	target_link_libraries(${TARGET_NAME} QXML.lib)
+	#target_link_libraries(${TARGET_NAME} ResourceManager.lib)
+	#target_link_libraries(${TARGET_NAME} QXML.lib)
 	
 	target_link_libraries(${TARGET_NAME} QJson.lib)
 	
