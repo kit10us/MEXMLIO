@@ -20,7 +20,7 @@
  */
 
 #include <xmlio/DocumentSourceFactory.h>
-#include <xmlio/DocumentSource.h>
+#include <xmlio/Document.h>
 
 using namespace xmlio;
 
@@ -29,12 +29,15 @@ DocumentSourceFactory::DocumentSourceFactory(me::game::IGame* game)
 {
 }
 
-io::Source::ptr Produce(unify::Path source, unify::Parameters parameters)
+io::IDocument::ptr DocumentSourceFactory::Produce(unify::Path source, unify::Parameters parameters)
 {
-	auto documentSource = std::make_shared<DocumentSource>(source);
-	return io::Source::ptr{ documentSource };
+	auto documentSource = std::make_shared<Document>(source);
+	return io::IDocument::ptr{ documentSource };
 }
 
-io::Source::ptr Produce(unify::Parameters parameters)
+io::IDocument::ptr DocumentSourceFactory::Produce(unify::Parameters parameters)
 {
+	// TODO:
+	auto documentSource = std::make_shared<Document>();
+	return documentSource;
 }

@@ -19,18 +19,31 @@
  * along with QXMLIO.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <unify/Path.h>
-#include <io/Source.h>
+#include <xmlio/Document.h>
 #include <qxml/Document.h>
 
-namespace xmlio
-{
-	class DocumentSource : public io::Source
-	{
-	public:
-		DocumentSource(unify::Path path);
+using namespace xmlio;
 
-	private:
-		qxml::Document m_xml;
-	};
+Document::Document()
+{
+}
+
+Document::Document(unify::Path path)
+{
+}
+
+std::weak_ptr<io::ISource> Document::Root() const
+{
+	return std::weak_ptr<io::ISource>();
+}
+
+
+bool Document::Reload()
+{
+	return false;
+}
+
+std::string Document::GetSource() const
+{
+	return "TODO";
 }

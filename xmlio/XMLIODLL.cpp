@@ -19,14 +19,10 @@
  * along with QXMLIO.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-//#include <ase/AseDLL.h>
-//#include <ase/GeometryFactory.h>
-//#include <memory.h>
-//#include <me/render/IRenderer.h>
-
-#include <me/game/IGame.h>
+#include <me/game/Game.h>
 #include <me/debug/ErrorLevel.h>
 #include <xmlio/DocumentSourceFactory.h>
+#include <io/IDocument.h>
 
 using namespace xmlio;
 using namespace me;
@@ -37,13 +33,15 @@ __declspec(dllexport) bool MELoader( me::game::IGame * game, const qxml::Element
 {
 	using namespace me;
 
+	auto gameDerived = dynamic_cast<me::game::Game*>(game);
+
 	auto debug = game->Debug();
 	auto block{ debug->GetLogger()->CreateBlock( "MELoader \"QXMLIO\"" ) };
 
 	// Setup XML source factory
 	DocumentSourceFactory * factory = new DocumentSourceFactory( game );
 
-	game->GetManager<io::Source>()->AddFactory( "xml", DocumentSourceFactory::ptr( factory ) );
+	gameDerived->GetManager<io::IDocument>()->AddFactory( "xml", DocumentSourceFactory::ptr( factory ) );
 	return true;
 }
 

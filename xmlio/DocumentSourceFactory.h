@@ -21,21 +21,21 @@
 
 #pragma once
 
-#include <io/Source.h>
-#include <rm/ResourceManager.h>
 #include <me/game/IGame.h>
+#include <io/IDocument.h>
+#include <rm/ResourceManager.h>
 
 namespace xmlio
 {
-	class DocumentSourceFactory : public rm::ISourceFactory< io::Source >
+	class DocumentSourceFactory : public rm::ISourceFactory< io::IDocument >
 	{
 	public:
-		typedef std::shared_ptr< rm::ISourceFactory< io::Source> > ptr;
+		typedef std::shared_ptr< rm::ISourceFactory< io::IDocument> > ptr;
 
 		DocumentSourceFactory(me::game::IGame* game);
 
-		io::Source::ptr Produce(unify::Path source, unify::Parameters parameters) override;
-		io::Source::ptr Produce(unify::Parameters parameters) override;
+		io::IDocument::ptr Produce(unify::Path source, unify::Parameters parameters) override;
+		io::IDocument::ptr Produce(unify::Parameters parameters) override;
 
 	private:
 		me::game::IGame* m_game;
