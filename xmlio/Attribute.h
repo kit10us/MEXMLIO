@@ -19,33 +19,30 @@
  * along with QXMLIO.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#if !defined(MEXMLIO_DOCUMENT_H)
-#define MEXMLIO_DOCUMENT_H
+
+#if !defined(MEXMLIO_ATTRIBUTE_H)
+#define MEXMLIO_ATTRIBUTE_H
 
 
-#include <unify/Path.h>
-#include <io/IDocument.h>
-#include <qxml/Document.h>
+#include <io/INode.h>
+#include <qxml/Attribute.h>
 
 namespace xmlio
 {
-	class Document : public io::IDocument
+	class Attribute : public io::INode
 	{
 	public:
-		Document();
-		Document(unify::Path path);
+		Attribute(const qxml::Attribute* attribute);
 
-	public: // io::IDocument
-		virtual io::INode::ptr Root() const override;
-
-	public: // rm::IResource
-		virtual bool Reload() override;
-
-		virtual std::string GetSource() const override;
+		virtual bool IsMatch(std::string filter) const;
+		virtual std::string Text() const;
+		virtual std::string Value() const;
+		
+		virtual io::INode::list Children(std::string filter) const;
+		virtual io::INode::list Attributes(std::string filter) const;
 
 	private:
-		unify::Path m_path;
-		qxml::Document m_document;
+		const qxml::Attribute* m_attribute;
 	};
 }
 

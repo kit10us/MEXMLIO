@@ -19,5 +19,9 @@
  * along with QXMLIO.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#if !defined(MEXMLIO_XMLIODLL_H)
+#define MEXMLIO_XMLIODLL_H
+
+
+#endif
 

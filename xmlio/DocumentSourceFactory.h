@@ -19,7 +19,9 @@
  * along with QXMLIO.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#if !defined(MEXMLIO_DOCUMENTSOURCEFACTORY_H)
+#define MEXMLIO_DOCUMENTSOURCEFACTORY_H
+
 
 #include <me/game/IGame.h>
 #include <io/IDocument.h>
@@ -41,3 +43,6 @@ namespace xmlio
 		me::game::IGame* m_game;
 	};
 }
+
+
+#endif

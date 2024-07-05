@@ -61,10 +61,3 @@ function(AddStandardCompileOptions TARGET_NAME)
 		# Older flag for Xcode: add_compile_options(-std=c++1z)
 	endif()
 endfunction()
-
-function(AddStandardCompileDefinitions TARGET_NAME)
-	target_compile_definitions(${TARGET_NAME} PRIVATE
-		$<$<CONFIG:Debug>:_DEBUG>
-		$<$<CONFIG:Release>:NDEBUG>
-	)
-endfunction()

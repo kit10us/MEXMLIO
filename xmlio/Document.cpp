@@ -20,7 +20,7 @@
  */
 
 #include <xmlio/Document.h>
-#include <qxml/Document.h>
+#include <xmlio/Element.h>
 
 using namespace xmlio;
 
@@ -29,14 +29,15 @@ Document::Document()
 }
 
 Document::Document(unify::Path path)
+	: m_path{ path }
+	, m_document{ path }
 {
 }
 
-std::weak_ptr<io::ISource> Document::Root() const
+io::INode::ptr Document::Root() const
 {
-	return std::weak_ptr<io::ISource>();
+	return std::make_shared<Element>(m_document.GetRoot());
 }
-
 
 bool Document::Reload()
 {
@@ -45,5 +46,5 @@ bool Document::Reload()
 
 std::string Document::GetSource() const
 {
-	return "TODO";
+	return m_path.ToString();
 }

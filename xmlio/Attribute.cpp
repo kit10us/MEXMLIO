@@ -19,35 +19,42 @@
  * along with QXMLIO.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#if !defined(MEXMLIO_DOCUMENT_H)
-#define MEXMLIO_DOCUMENT_H
+#include <xmlio/Attribute.h>
 
+using namespace xmlio;
 
-#include <unify/Path.h>
-#include <io/IDocument.h>
-#include <qxml/Document.h>
-
-namespace xmlio
+Attribute::Attribute(const qxml::Attribute* attribute)
+	: m_attribute{ attribute }
 {
-	class Document : public io::IDocument
-	{
-	public:
-		Document();
-		Document(unify::Path path);
-
-	public: // io::IDocument
-		virtual io::INode::ptr Root() const override;
-
-	public: // rm::IResource
-		virtual bool Reload() override;
-
-		virtual std::string GetSource() const override;
-
-	private:
-		unify::Path m_path;
-		qxml::Document m_document;
-	};
 }
 
+bool Attribute::IsMatch(std::string filter) const
+{
+	// We consider the attribute a match if the filter is empty, or if it is the name of the attribute.
+	if (filter.empty() || strcmp(m_attribute->GetName().c_str(), filter.c_str()) == 0)
+	{
+		return true;
+	}
 
-#endif
+	return false;
+}
+
+std::string Attribute::Text() const
+{
+	return m_attribute->GetString();
+}
+
+std::string Attribute::Value() const
+{
+	return m_attribute->Get<std::string>();
+}
+
+io::INode::list Attribute::Children(std::string filter) const
+{
+	return {};
+}
+
+io::INode::list Attribute::Attributes(std::string filter) const
+{
+	return {};
+}

@@ -41,7 +41,8 @@ __declspec(dllexport) bool MELoader( me::game::IGame * game, const qxml::Element
 	// Setup XML source factory
 	DocumentSourceFactory * factory = new DocumentSourceFactory( game );
 
-	gameDerived->GetManager<io::IDocument>()->AddFactory( "xml", DocumentSourceFactory::ptr( factory ) );
+	auto manager = gameDerived->GetManager<io::IDocument>();
+	manager->AddFactory( "xml", DocumentSourceFactory::ptr( factory ) );
 	return true;
 }
 
