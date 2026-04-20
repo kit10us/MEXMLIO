@@ -33,7 +33,7 @@ Element::Element(const qxml::Element* element)
 bool Element::IsMatch(std::string filter) const
 {
 	std::string name = m_element->GetName();
-	return unify::string::StringIs(name, filter);
+	return unify::String::StringIs(name, filter);
 	//return m_element->IsTagName(filter);
 }
 

@@ -29,6 +29,10 @@
 
 namespace xmlio
 {
+	/// <summary>
+	/// Allows the factory to produce documents from a source, such as a file, or from parameters, such as a string of XML.
+	/// Allows the unification of different formats to be treated the same way, no matter the original format.
+	/// </summary>
 	class DocumentSourceFactory : public rm::ISourceFactory< io::IDocument >
 	{
 	public:
